@@ -55,39 +55,53 @@ public class FoodOrderGUI extends JFrame {
     }
 
     public void computerOrder(){
-        double total = 0;
-        for(JCheckBox cb: coFoods){
-            if(cb.isSelected()){
-                if(cb == cPizza){
-                    total += 100;
-                }else if(cb == cBurger){
-                    total += 80;
-                }else if(cb == cFries){
-                    total += 65;
-                }else if(cb == cSoftDrinks){
-                    total += 55;
-                }else if(cb == cTea){
-                    total += 50;
-                }else if(cb == cSundae){
-                    total += 40;
+       try{
+            double total = 0;
+            boolean flagFood = false;
+            boolean flagDiscount = false;
+            for (JCheckBox cb : coFoods) {
+                if (cb.isSelected()) {
+                    flagFood = true;
+                    if (cb == cPizza) {
+                        total += 100;
+                    } else if (cb == cBurger) {
+                        total += 80;
+                    } else if (cb == cFries) {
+                        total += 65;
+                    } else if (cb == cSoftDrinks) {
+                        total += 55;
+                    } else if (cb == cTea) {
+                        total += 50;
+                    } else if (cb == cSundae) {
+                        total += 40;
+                    }
                 }
             }
-        }
-        for(JRadioButton cb: coDiscount){
-            if(cb.isSelected()){
-                if(cb == rbNone){
-                    //None
-                }else if(cb == rb5){
-                    total -= (total * .05);
-                }else if(cb == rb10){
-                    total -= (total * .1);
-                }else if(cb == rb15){
-                    total -= (total *.15);
+            if(!flagFood) {
+                throw new Exception("You must select at least one food option");
+            }
+            for (JRadioButton cb : coDiscount) {
+                if (cb.isSelected()) {
+                    flagDiscount = true;
+                    if (cb == rbNone) {
+                        //None
+                    } else if (cb == rb5) {
+                        total -= (total * .05);
+                    } else if (cb == rb10) {
+                        total -= (total * .1);
+                    } else if (cb == rb15) {
+                        total -= (total * .15);
+                    }
                 }
             }
-        }
-
-        JOptionPane.showMessageDialog(panel, String.format("The total price is Php %.2f", total));
+            if(!flagDiscount){
+                throw new Exception("You must provide a discount option");
+            }
+            JOptionPane.showMessageDialog(panel, String.format("The total price is Php %.2f", total));
+        }catch (Exception e){
+           JOptionPane.showMessageDialog(panel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+       }
     }
+
 
 }
