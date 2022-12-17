@@ -1,12 +1,10 @@
 package SimpleCalc;
 
-import LeapYear.LeapYearGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class SimpleCalcGUI extends JFrame{
     private JPanel panel;
@@ -38,24 +36,32 @@ public class SimpleCalcGUI extends JFrame{
     }
 
     public void calculate(){
-        int firstNum = Integer.parseInt(tfNumber1.getText());
-        int secondNum = Integer.parseInt(tfNumber2.getText());
-        int operation = cbOperations.getSelectedIndex();
-        int result = 0;
-        switch (operation) {
-            case 0:
-                result = firstNum + secondNum;
-                break;
-            case 1:
-                result = firstNum - secondNum;
-                break;
-            case 2:
-                result = firstNum * secondNum;
-                break;
-            case 3:
-                result = firstNum / secondNum;
-                break;
+        try{
+            int firstNum = Integer.parseInt(tfNumber1.getText());
+            int secondNum = Integer.parseInt(tfNumber2.getText());
+            int operation = cbOperations.getSelectedIndex();
+            int result = 0;
+            switch (operation) {
+                case 0:
+                    result = firstNum + secondNum;
+                    break;
+                case 1:
+                    result = firstNum - secondNum;
+                    break;
+                case 2:
+                    result = firstNum * secondNum;
+                    break;
+                case 3:
+                    result = firstNum / secondNum;
+                    break;
+            }
+            lblResult.setText(Integer.toString(result));
+        }catch (ArithmeticException e){
+            JOptionPane.showMessageDialog(panel, "You cannot divide with 0 as your second number...", "Error", JOptionPane.ERROR_MESSAGE);
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(panel, "Invalid input...", "Error", JOptionPane.ERROR_MESSAGE);
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(panel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        lblResult.setText(Integer.toString(result));
     }
 }
